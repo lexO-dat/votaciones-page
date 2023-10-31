@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//hola como estas
+
 mongoose.connect("mongodb://127.0.0.1:27017/LoginDatabase")
 .then(() => {
     console.log("Conectado a la db de usuario");
