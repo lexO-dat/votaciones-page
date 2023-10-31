@@ -1,0 +1,51 @@
+.navbar-custom {
+    height: 75px; /* Ajusta la altura según tus necesidades */
+  }
+
+  body{
+    margin-top: 6%;
+  }
+
+  .card{
+    height: 100%;
+  }
+
+  .card img{
+    height: 65%;
+    width: 100%;
+  }
+
+  .card .card-body .card-title{
+    font-size: 20px;
+    font-weight: bold;
+    height: 10%;
+  }
+
+  .boton{
+    width:100px;
+    align-items: center;
+    text-align: center;
+    height: 35px;
+    color: rgb(0, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    text-transform: uppercase;
+  }
+
+  footer ul li a:link, a:visited, a:active {
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
+}
+
+  .card a .boton .texto{
+    padding-top: 10%;
+  }
+
+
+  @media (max-width: 767px) {
+    body{
+      margin-top: 25%;
+    }
+
+}

@@ -1,0 +1,60 @@
+.navbar-custom {
+    height: 75px; /* Ajusta la altura según tus necesidades */
+  }
+
+  body{
+    margin-top: 6%;
+  }
+
+  .card{
+    margin-top: 10px;
+    height: 400px;
+  }
+
+  .btn{
+    border: 2px solid rgb(19, 19, 19);
+    background-color: transparent;
+    font-weight: bold;
+    width: 100px;
+    margin-bottom: 60px;
+  }
+  .card img{
+    height: 65%;
+    width: 100%;
+  }
+
+  .card .card-body .card-title{
+    margin-top: 10%;
+    font-size: 20px;
+    font-weight: bold;
+    height: 10%;
+  }
+
+
+  .boton-2{
+    width:100px;
+    align-items: center;
+    text-align: center;
+    height: 35px;
+    color: rgb(0, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    text-transform: uppercase;
+  }
+
+  .card a .boton .texto{
+    padding-top: 10%;
+  }
+
+  footer ul li a:link, a:visited, a:active {
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
+}
+
+  @media (max-width: 767px) {
+    body{
+      margin-top: 20%;
+    }
+
+}

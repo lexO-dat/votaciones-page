@@ -1,0 +1,73 @@
+#navegacion{
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+
+footer ul li a:link, a:visited, a:active {
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
+}
+
+.form-text{
+    margin-top: 15px;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+}
+
+.navbar{
+    position: absolute;
+    background-color: rgb(233, 226, 226);
+}
+
+.btn{
+    border: 2px solid rgb(19, 19, 19);
+    background-color: transparent;
+    font-weight: bold;
+}
+
+#log-in{
+    margin-top: 10%;
+}
+
+.card {
+    height: 100%;
+}
+
+.card img{
+    height: 65%;
+    width: 100%;
+  }
+
+.card .card-body .card-title{
+    margin-top: 5%;
+    font-size: 20px;
+    font-weight: bold;
+    height: 10%;
+  }
+
+  footer ul li a:link, a:visited, a:active {
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
+}
+
+svg{
+    margin-top: 15px;
+    justify-content: space-between;
+    margin-left: 25px;
+    margin-right: 20px;
+}
+
+.icono{
+    color: black;
+}
+
+@media (max-width: 767px) {
+    #log-in{
+    margin-top: 20%;
+}
+}

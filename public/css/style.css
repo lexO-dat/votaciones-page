@@ -1,0 +1,42 @@
+#header{
+    background-color: white;
+}
+body::-webkit-scrollbar{
+    display: none;
+}
+
+.navbar{
+    position: absolute;
+}
+
+.btn{
+    border: 2px solid rgb(19, 19, 19);
+    background-color: transparent;
+    font-weight: bold;
+}
+
+#navegacion{
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+}
+
+#body{
+    background-color: white;
+    margin-top: 8%;
+}
+
+body{
+    background-color: white;
+}
+
+footer ul li a:link, a:visited, a:active {
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
+}
+
+@media (max-width: 767px) {
+    #body{
+        margin-top: 12%;
+    }
+}

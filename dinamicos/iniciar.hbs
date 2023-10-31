@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/page-inicio.css">
+    <title>Big Bro | Iniciar</title>
+</head>
+
+<nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid" id="navegacion">
+
+        <a href="/" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+            <span class="fs-4">Big Bro </span>
+          </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Big Bro </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <!--el active hace que quede el texto en negrita para representar que es la actual-->
+              <a class="nav-link" aria-current="page" href="/">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/votaciones">Votar</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" aria-current="page" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                log in
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/iniciar">Iniciar Sesion</a></li>
+                <li><a class="dropdown-item" href="/registro">Registrarse</a></li>
+                <li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</nav>
+
+<body>
+    <div class="container" id="log-in">
+      <div class="row g-5">
+            <div class="col-sm-5 col-md-4 col-lg-3"></div>
+            <div class="col-sm-3 col-md-4 col-lg-5 text-center">
+              <h1 class="titulo-log-in">Log In :)</h1>
+                <form action="/iniciar" method="post">
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Rut</label>
+                      <input type="text" class="form-control" id="exampleInputEmail1" name="rut" placeholder="rut" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                      <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn">Iniciar</button>
+                  </form>
+                  <a href="/registro">Crear un Usuario</a>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4"></div>
+        </div>
+      </div>
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <script src="./form-control.js"></script>
+</body>
+</html>

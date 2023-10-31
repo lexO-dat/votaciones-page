@@ -1,0 +1,36 @@
+body{
+    margin-top: 7%;
+}
+
+.btn{
+    border: 2px solid rgb(19, 19, 19);
+    background-color: transparent;
+    font-weight: bold;
+}
+
+footer ul li a:link, a:visited, a:active {
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+}
+
+table thead{
+text-align: center;
+}
+
+footer ul li a:link, a:visited, a:active {
+    text-decoration:none;
+    font-weight: bold;
+    color: black;
+}
+
+/*css diferente si detecta una pantalla con un ancho maximo de 767px*/
+@media (max-width: 767px) {
+    body{
+        margin-top: 20%;
+    }
+}
