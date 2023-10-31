@@ -68,38 +68,19 @@
     <section class="container my-5 text-center">
         <h2>Votaciones Anteriores</h2>
         <div class="row">
-            <!-- Aquí puedes iterar sobre las votaciones pasadas y mostrarlas en tarjetas -->
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="./img/illojuan.webp" class="card-img-top" alt="Votación Anterior 1">
-                    <div class="card-body">
-                      <h5 class="card-title">Expulsado: Juan Alberto</h5>
-                      <p class="card-text">I yo Wan (Nunca supe como se escribe).</p>
-                      <a href="detalle_de_votacion_BASADO.html" class="btn btn-lg">Mas Informacion</a>
-
-                  </div>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="./img/skarleth.jpg" class="card-img-top" alt="Votación Anterior 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Expulsado: Skarleth</h5>
-                        <p class="card-text">Yo nunca pelo.</p>
-                        <a href="detalle_de_votacion_Cahuinera.html" class="btn btn-lg">Mas Informacion</a>
+            <div class="row">
+              {{#each ganadores}}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{this.imagen}}" class="card-img-top" alt="{{this.nombre}}">
+                        <div class="card-body">
+                          <h5 class="card-title">Ganador: {{this.nombre}}</h5>
+                          <p class="card-text">{{this.descripcion}}</p>
+                        </div>
                     </div>
                 </div>
+              {{/each}}
             </div>
-            <div class="col-md-4 mb-4">
-              <div class="card">
-                  <img src="./img/pique.webp" class="card-img-top" alt="Votación Anterior 2">
-                  <div class="card-body">
-                      <h5 class="card-title">Expulsado: Sal pique </h5>
-                      <p class="card-text">El que tiene un casio y un twingo.</p>
-                      <a href="detalle_de_votacion_FUNAO.html" class="btn btn-lg">Mas Informacion</a>
-                  </div>
-              </div>
-          </div>
         </div>
     </section>
 

@@ -60,6 +60,10 @@ const datos_votacion = new mongoose.Schema({
   candidato3_votos: {
     type: Number,
     required: false
+  },
+  ganador: {
+    type: String,
+    required: false
   }
 });
 

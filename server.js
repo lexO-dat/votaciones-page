@@ -27,9 +27,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 hbs.registerPartials(path.join(__dirname, 'dinamicos/partials'));
 
-// Rutas
-app.get('/', (req, res) => {
-    res.render('indexInicial');
+
+app.get('/', async (req, res) => {
+        res.render('indexInicial'); 
 });
 
 app.get('/iniciar', (req, res) => {
@@ -46,6 +46,46 @@ app.get('/crear', (req, res) => {
 
 app.get('/indexInicial', (req, res) => {
     res.render('indexInicial');
+});
+
+app.get('/votos_candidato', (req, res) => {
+    res.render('votos_candidato');
+});
+
+app.get('/resultados/:id', async (req, res) => {
+    const votacionId = req.params.id;
+
+    try {
+        const votacion = await dbvotacion.findById(votacionId);
+        console.log(votacion.candidato1_votos);
+
+        if (votacion) {
+            res.render('resultados', { votacion });
+        } else {
+            res.send("Votación no encontrada.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al cargar los resultados.");
+    }
+});
+
+app.get('/resultados_admin/:id', async (req, res) => {
+    const votacionId = req.params.id;
+
+    try {
+        const votacion = await dbvotacion.findById(votacionId);
+        console.log(votacion.candidato1_votos);
+
+        if (votacion) {
+            res.render('resultados_admin', { votacion });
+        } else {
+            res.send("Votación no encontrada.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al cargar los resultados.");
+    }
 });
 
 app.get('/index', (req, res) => {
@@ -89,21 +129,18 @@ app.get('/votaciones', async (req, res) => {
 
 app.get('/votar/:id', async (req, res) => {
     const votacionId = req.params.id;
-    // Aquí debes buscar los datos de la votación específica por su ID en tu base de datos
     const votacion = await dbvotacion.findById(votacionId);
     res.render('votar', { votacion });
 });
 
 app.get('/votar_admin/:id', async (req, res) => {
     const votacionId = req.params.id;
-    // Aquí debes buscar los datos de la votación específica por su ID en tu base de datos
     const votacion = await dbvotacion.findById(votacionId);
     res.render('votar_admin', { votacion });
 });
 
 app.post('/registro', async (req, res) => {
     try {
-        // Crear un nuevo perfil de usuario
         const userData = {
             rut: req.body.rut,
             password: req.body.password,
@@ -117,7 +154,6 @@ app.post('/registro', async (req, res) => {
 
         const newUser = await collection.create(userData);
 
-        // para el inicio de sesión
         const datos = {
             nombre: userData.nombre,
             apellido: userData.apellido
@@ -172,7 +208,10 @@ app.post('/crear', async (req, res) => {
             candidato2_descripcion: req.body.descripcionc2,
             candidato3_descripcion: req.body.descripcionc3,
             fecha_inicio: req.body.fechaInicio,
-            fecha_fin: req.body.fechaFin
+            fecha_fin: req.body.fechaFin,
+            candidato1_votos: 0, 
+            candidato2_votos: 0, 
+            candidato3_votos: 0
         };
 
         const newVotacion = await dbvotacion.create(crear);
@@ -183,6 +222,70 @@ app.post('/crear', async (req, res) => {
         res.send("Error al crear votación.");
     }
 });
+
+app.post('/votar/:id', async (req, res) => {
+    const votacionId = req.params.id;
+    const candidatoSeleccionado = req.body.candidato;
+
+    try {
+        const votacion = await dbvotacion.findById(votacionId);
+
+        if (votacion) {
+            if (candidatoSeleccionado >= 1 && candidatoSeleccionado <= 3) {
+                if (candidatoSeleccionado === '1') {
+                    votacion.candidato1_votos = (votacion.candidato1_votos || 0) + 1;
+                } else if (candidatoSeleccionado === '2') {
+                    votacion.candidato2_votos = (votacion.candidato2_votos || 0) + 1;
+                } else if (candidatoSeleccionado === '3') {
+                    votacion.candidato3_votos = (votacion.candidato3_votos || 0) + 1;
+                }
+                await votacion.save();
+
+                res.redirect(`/resultados/${votacionId}`);
+            } else {
+                res.send("Candidato seleccionado no válido.");
+            }
+        } else {
+            res.send("Votación no encontrada.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al votar.");
+    }
+});
+
+app.post('/votar_admin/:id', async (req, res) => {
+    const votacionId = req.params.id;
+    const candidatoSeleccionado = req.body.candidato;
+
+    try {
+        const votacion = await dbvotacion.findById(votacionId);
+
+        if (votacion) {
+            if (candidatoSeleccionado >= 1 && candidatoSeleccionado <= 3) {
+                if (candidatoSeleccionado === '1') {
+                    votacion.candidato1_votos = (votacion.candidato1_votos || 0) + 1;
+                } else if (candidatoSeleccionado === '2') {
+                    votacion.candidato2_votos = (votacion.candidato2_votos || 0) + 1;
+                } else if (candidatoSeleccionado === '3') {
+                    votacion.candidato3_votos = (votacion.candidato3_votos || 0) + 1;
+                }
+                await votacion.save();
+
+                res.redirect(`/resultados_admin/${votacionId}`);
+            } else {
+                res.send("Candidato seleccionado no válido.");
+            }
+        } else {
+            res.send("Votación no encontrada.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al votar.");
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log(`La aplicación está escuchando en el puerto ${port}`);

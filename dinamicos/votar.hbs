@@ -54,9 +54,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Candidato: {{votacion.candidato1}}</h5>
                         <p class="card-text">{{votacion.candidato1_descripcion}}</p>
-                        <a href="/votar/{{votacion._id}}" class="btn btn-lg votar-btn" data-candidato="1">
-                          <div class="boton"><span class="texto">VOTA</span></div>
-                        </a>
+                        <form action="/votar/{{votacion._id}}" method="post">
+                            <input type="hidden" name="candidato" value="1">
+                            <button type="submit" class="btn btn-lg votar-btn" data-candidato="1">
+                                <div class="boton"><span class="texto">VOTA</span></div>
+                            </button>
+                         </form>
                     </div>
                 </div>
             </div>
@@ -66,9 +69,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Candidato: {{votacion.candidato2}}</h5>
                         <p class="card-text">{{votacion.candidato2_descripcion}}</p>
-                        <a href="/votar/{{votacion._id}}" class="btn btn-lg votar-btn" data-candidato="2">
-                          <div class="boton"><span class="texto">VOTA</span></div>
-                        </a>
+                        <form action="/votar/{{votacion._id}}" method="post">
+                            <input type="hidden" name="candidato" value="2">
+                            <button type="submit" class="btn btn-lg votar-btn" data-candidato="2">
+                                <div class="boton"><span class="texto">VOTA</span></div>
+                            </button>
+                         </form>
                     </div>
                 </div>
             </div>
@@ -78,9 +84,12 @@
                     <div class="card-body">
                         <h5 class="card-title">Candidato: {{votacion.candidato3}}</h5>
                         <p class="card-text">{{votacion.candidato3_descripcion}}</p>
-                        <a href="/votar/{{votacion._id}}" class="btn btn-lg votar-btn" data-candidato="3">
-                          <div class="boton"><span class="texto">VOTA</span></div>
-                        </a>
+                        <form action="/votar/{{votacion._id}}" method="post">
+                            <input type="hidden" name="candidato" value="3">
+                            <button type="submit" class="btn btn-lg votar-btn" data-candidato="3">
+                                <div class="boton"><span class="texto">VOTA</span></div>
+                            </button>
+                         </form>
                     </div>
                 </div>
             </div>
