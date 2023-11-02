@@ -54,6 +54,7 @@
                             <th>Fecha inicio</th>
                             <th>Fecha fin</th>
                             <th>Estado</th>
+                            <th>Borrar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,6 +70,11 @@
                                     CERRADA
                                   {{/if}}
                                 </td>
+                                <td>
+                                  <form action="/votaciones_admin/{{_id}}" method="post">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-danger">Borrar</button>
+                                  </form>
                             </tr>
                         {{/each}}
                     </tbody>
