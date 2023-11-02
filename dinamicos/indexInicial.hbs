@@ -58,30 +58,10 @@
       <!--si esta sin registrar saldra invitado-->
       <h1>¡Bienvenid@ {{datos.nombre}} {{datos.apellido}} a las Votaciones!</h1>
       <hr class="my-4">
-      <img src="./img/logoGH.png" alt="Imagen del Reality" id="imagen-inicio" class="img-fluid mb-4" width="600px" height="400px" style="margin-top: 20px;">
+      <img src="/img/sponge-bob-sponge-bob-mail.gif" alt="Imagen del Reality" id="imagen-inicio" class="img-fluid mb-4" width="600px" height="400px" style="margin-top: 20px;">
     </section>
     <section class="container my-5 text-center" >
-      <a href="lista-votaciones.html" class="btn btn-lg">¡Vota Ahora!</a>
-    </section>
-
-    <!-- Sección de votaciones pasadas -->
-    <section class="container my-5 text-center">
-        <h2>Votaciones Anteriores</h2>
-        <div class="row">
-            <div class="row">
-              {{#each ganadores}}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{this.imagen}}" class="card-img-top" alt="{{this.nombre}}">
-                        <div class="card-body">
-                          <h5 class="card-title">Ganador: {{this.nombre}}</h5>
-                          <p class="card-text">{{this.descripcion}}</p>
-                        </div>
-                    </div>
-                </div>
-              {{/each}}
-            </div>
-        </div>
+      <a href="/votaciones" class="btn btn-lg">¡Vota Ahora!</a>
     </section>
 
     {{> footer}}

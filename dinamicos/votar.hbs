@@ -50,10 +50,11 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://i.kym-cdn.com/photos/images/newsfeed/002/652/425/d9b.jpg" class="card-img-top" alt="img">
+                    <img src="/{{votacion.candidato1_imagen}}" class="card-img-top" alt="img">
                     <div class="card-body">
                         <h5 class="card-title">Candidato: {{votacion.candidato1}}</h5>
                         <p class="card-text">{{votacion.candidato1_descripcion}}</p>
+                        <p class="card-text">Votos: {{votacion.candidato1_votos}}</p>
                         <form action="/votar/{{votacion._id}}" method="post">
                             <input type="hidden" name="candidato" value="1">
                             <button type="submit" class="btn btn-lg votar-btn" data-candidato="1">
@@ -65,10 +66,11 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://i.kym-cdn.com/photos/images/newsfeed/002/652/425/d9b.jpg" class="card-img-top" alt="img">
+                    <img src="/{{votacion.candidato2_imagen}}" class="card-img-top" alt="img">
                     <div class="card-body">
                         <h5 class="card-title">Candidato: {{votacion.candidato2}}</h5>
                         <p class="card-text">{{votacion.candidato2_descripcion}}</p>
+                        <p class="card-text">Votos: {{votacion.candidato2_votos}}</p>
                         <form action="/votar/{{votacion._id}}" method="post">
                             <input type="hidden" name="candidato" value="2">
                             <button type="submit" class="btn btn-lg votar-btn" data-candidato="2">
@@ -80,10 +82,11 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="https://i.kym-cdn.com/photos/images/newsfeed/002/652/425/d9b.jpg" class="card-img-top" alt="img">
+                    <img src="/{{votacion.candidato3_imagen}}" class="card-img-top" alt="img">
                     <div class="card-body">
                         <h5 class="card-title">Candidato: {{votacion.candidato3}}</h5>
                         <p class="card-text">{{votacion.candidato3_descripcion}}</p>
+                        <p class="card-text">Votos: {{votacion.candidato3_votos}}</p>
                         <form action="/votar/{{votacion._id}}" method="post">
                             <input type="hidden" name="candidato" value="3">
                             <button type="submit" class="btn btn-lg votar-btn" data-candidato="3">
