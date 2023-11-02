@@ -64,7 +64,10 @@ const datos_votacion = new mongoose.Schema({
   ganador: {
     type: String,
     required: false
-  }
+  },
+  candidato1_imagen: String,
+  candidato2_imagen: String,
+  candidato3_imagen: String,
 });
 
 const votacion = mongoose.model('votacion', datos_votacion);

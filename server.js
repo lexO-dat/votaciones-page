@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const multer = require('multer');
 const port = 3000;
 const hbs = require('hbs');
 const collection = require('./mongo');
@@ -17,6 +18,17 @@ hbs.registerHelper('isVotacionAbierta', (fechaFin) => {
         return false;
     }
 });
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/img'); // Directorio donde se guardarán las imágenes
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    },
+  });
+
+const upload = multer({ storage: storage });
 
 // Configuración de vistas y plantillas
 const views_path = path.join(__dirname, 'dinamicos');
@@ -57,8 +69,6 @@ app.get('/resultados/:id', async (req, res) => {
 
     try {
         const votacion = await dbvotacion.findById(votacionId);
-        console.log(votacion.candidato1_votos);
-
         if (votacion) {
             res.render('resultados', { votacion });
         } else {
@@ -70,13 +80,11 @@ app.get('/resultados/:id', async (req, res) => {
     }
 });
 
-app.get('/resultados_admin/:id', async (req, res) => {
+app.get('/resultados_admin/:id', async  (req, res) => {
     const votacionId = req.params.id;
 
     try {
         const votacion = await dbvotacion.findById(votacionId);
-        console.log(votacion.candidato1_votos);
-
         if (votacion) {
             res.render('resultados_admin', { votacion });
         } else {
@@ -197,7 +205,11 @@ app.get('/cerrar_sesion', (req, res) => {
     res.redirect('/indexInicial');
 });
 
-app.post('/crear', async (req, res) => {
+app.post('/crear', upload.fields([
+    { name: 'candidato1_imagen', maxCount: 1 },
+    { name: 'candidato2_imagen', maxCount: 1 },
+    { name: 'candidato3_imagen', maxCount: 1 },
+  ]), async (req, res) => {
     try {
         const crear = {
             nombre: req.body.nombre,
@@ -211,7 +223,10 @@ app.post('/crear', async (req, res) => {
             fecha_fin: req.body.fechaFin,
             candidato1_votos: 0, 
             candidato2_votos: 0, 
-            candidato3_votos: 0
+            candidato3_votos: 0,
+            candidato1_imagen: req.files['candidato1_imagen'][0].path.replace(/\\/g, '/').replace(/public\//, ''),
+            candidato2_imagen: req.files['candidato2_imagen'][0].path.replace(/\\/g, '/').replace(/public\//, ''),
+            candidato3_imagen: req.files['candidato3_imagen'][0].path.replace(/\\/g, '/').replace(/public\//, '')
         };
 
         const newVotacion = await dbvotacion.create(crear);
@@ -227,6 +242,12 @@ app.post('/votar/:id', async (req, res) => {
     const votacionId = req.params.id;
     const candidatoSeleccionado = req.body.candidato;
 
+    // Comprueba si la cookie ya existe para esta votación.
+    if (req.cookies[`voto_${votacionId}`]) {
+        res.send("Ya has votado en esta votación.");
+        return;
+    }
+
     try {
         const votacion = await dbvotacion.findById(votacionId);
 
@@ -239,8 +260,10 @@ app.post('/votar/:id', async (req, res) => {
                 } else if (candidatoSeleccionado === '3') {
                     votacion.candidato3_votos = (votacion.candidato3_votos || 0) + 1;
                 }
-                await votacion.save();
 
+                res.cookie(`voto_${votacionId}`, 'votado', { path: `/votar/${votacionId}` });
+
+                await votacion.save();
                 res.redirect(`/resultados/${votacionId}`);
             } else {
                 res.send("Candidato seleccionado no válido.");
@@ -258,6 +281,12 @@ app.post('/votar_admin/:id', async (req, res) => {
     const votacionId = req.params.id;
     const candidatoSeleccionado = req.body.candidato;
 
+    // Comprueba si la cookie ya existe para esta votación.
+    if (req.cookies[`voto_${votacionId}`]) {
+        res.send("Ya has votado en esta votación.");
+        return;
+    }
+
     try {
         const votacion = await dbvotacion.findById(votacionId);
 
@@ -270,8 +299,10 @@ app.post('/votar_admin/:id', async (req, res) => {
                 } else if (candidatoSeleccionado === '3') {
                     votacion.candidato3_votos = (votacion.candidato3_votos || 0) + 1;
                 }
-                await votacion.save();
 
+                res.cookie(`voto_${votacionId}`, 'votado', { path: `/votar/${votacionId}` });
+
+                await votacion.save();
                 res.redirect(`/resultados_admin/${votacionId}`);
             } else {
                 res.send("Candidato seleccionado no válido.");
@@ -284,8 +315,6 @@ app.post('/votar_admin/:id', async (req, res) => {
         res.send("Error al votar.");
     }
 });
-
-
 
 app.listen(port, () => {
     console.log(`La aplicación está escuchando en el puerto ${port}`);
