@@ -238,6 +238,25 @@ app.post('/crear', upload.fields([
     }
 });
 
+app.post('/votaciones_admin/:id', async (req, res) => {
+    const votacionId = req.params.id;
+
+    try {
+        // Busca y elimina la votación por su ID
+        const result = await dbvotacion.findByIdAndDelete(votacionId);
+
+        if (result) {
+            // Votación eliminada con éxito
+            res.redirect('/votaciones_admin'); // Redirige a la página de votaciones admin u otra página de tu elección
+        } else {
+            res.send("Votación no encontrada."); // Votación no encontrada
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al eliminar la votación.");
+    }
+});
+
 app.post('/votar/:id', async (req, res) => {
     const votacionId = req.params.id;
     const candidatoSeleccionado = req.body.candidato;
