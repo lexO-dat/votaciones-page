@@ -125,13 +125,16 @@ app.get('/votaciones', async (req, res) => {
     try {
         const votaciones = await dbvotacion.find({});
         if (votaciones.length > 0) {
-            res.render('votaciones', { votaciones });
+            //res.render('votaciones', { votaciones });
+		res.send({ votaciones });
         } else {
-            res.send("No se encontraron votaciones.");
+            //res.send("No se encontraron votaciones.");
+		res.send(false);
         }
     } catch (error) {
         console.error(error);
-        res.send("Error al cargar las votaciones.");
+        //res.send("Error al cargar las votaciones.");
+	res.send(false);
     }
 });
 
@@ -139,6 +142,38 @@ app.get('/votar/:id', async (req, res) => {
     const votacionId = req.params.id;
     const votacion = await dbvotacion.findById(votacionId);
     res.render('votar', { votacion });
+});
+
+app.get('/Resultados_Finales/:id', async (req, res) => { 
+    const votacionId = req.params.id;
+
+    try {
+        const votacion = await dbvotacion.findById(votacionId);
+        if (votacion) {
+            res.render('Resultados_Finales', { votacion });
+        } else {
+            res.send("Votación no encontrada.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al cargar los resultados.");
+    }
+});
+
+app.get('/Resultados_Finales_Admin/:id', async (req, res) => { 
+    const votacionId = req.params.id;
+
+    try {
+        const votacion = await dbvotacion.findById(votacionId);
+        if (votacion) {
+            res.render('Resultados_Finales_Admin', { votacion });
+        } else {
+            res.send("Votación no encontrada.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al cargar los resultados.");
+    }
 });
 
 app.get('/votar_admin/:id', async (req, res) => {
@@ -149,6 +184,10 @@ app.get('/votar_admin/:id', async (req, res) => {
 
 app.post('/registro', async (req, res) => {
     try {
+        const rut = req.params.rut;
+        if(await collection.findOne({ rut })) {
+            res.send("El rut ya está registrado.");
+        }else{
         const userData = {
             rut: req.body.rut,
             password: req.body.password,
@@ -167,11 +206,30 @@ app.post('/registro', async (req, res) => {
             apellido: userData.apellido
         };
         res.cookie('usuario', `${userData.nombre} ${userData.apellido}`, { path: '/index' });
-
-        res.render('index', { datos });
+	
+	res.send(true);
+        //res.render('index', { datos });
+        }
     } catch (error) {
         console.error(error);
-        res.send("Error en el registro de usuario.");
+        //res.send("Error en el registro de usuario.");
+	res.send(false);
+    }
+});
+
+app.get('/borrar_usuarios', async (req, res) => {
+    try {
+        // Utiliza el método `deleteMany` para eliminar todos los usuarios
+        const result = await collection.deleteMany({});
+
+        if (result.deletedCount > 0) {
+            res.send(`Se han eliminado ${result.deletedCount} usuarios.`);
+        } else {
+            res.send("No se encontraron usuarios para eliminar.");
+        }
+    } catch (error) {
+        console.error(error);
+        res.send("Error al eliminar todos los usuarios.");
     }
 });
 
@@ -186,23 +244,27 @@ app.post('/iniciar', async (req, res) => {
             // Verificar la contraseña
             if (userData.password === password) {
                 res.cookie('usuario', `${userData.nombre} ${userData.apellido}`, { path: '/index' });
-                res.redirect('/index');
+                //res.redirect('/index');
+		res.send(true);
             } else {
-                res.send("Contraseña incorrecta");
+                //res.send("Contraseña incorrecta");
+		res.send(false);
             }
         } else {
-            res.send("Usuario no encontrado, cree un usuario nuevo o verifique los datos ingresados.");
+            //res.send("Usuario no encontrado, cree un usuario nuevo o verifique los datos ingresados.");
+		res.send(false)
         }
     } catch (error) {
         console.error(error);
-        res.send("Error al iniciar sesión.");
+        //res.send("Error al iniciar sesión.");
+	res.send(false);
     }
 });
 
-
 app.get('/cerrar_sesion', (req, res) => {
     res.clearCookie('usuario');
-    res.redirect('/indexInicial');
+    //res.redirect('/indexInicial');
+	res.send(true);
 });
 
 app.post('/crear', upload.fields([
@@ -231,10 +293,12 @@ app.post('/crear', upload.fields([
 
         const newVotacion = await dbvotacion.create(crear);
 
-        res.redirect('/index');
+        //res.redirect('/index');
+	res.send(true);
     } catch (err) {
         console.error(err);
-        res.send("Error al crear votación.");
+        //res.send("Error al crear votación.");
+	res.send(false);
     }
 });
 
