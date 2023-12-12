@@ -72,7 +72,7 @@
         const votacionId = urlParams.get('votacionId');
         
         //const votacionId = req.params.id;
-        fetch(`http://localhost:3000/usuarios/eventos/${votacionId}`)
+        fetch(`/usuarios/eventos/${votacionId}`)
             .then(response => response.json())
             .then(votacion => {
                 // Actualizar el nombre de la votación
