@@ -140,7 +140,7 @@
     // Manejar el clic en el botón Cerrar Sesión
     document.getElementById('cerrarSesionBtn').addEventListener('click', function () {
         // URL de la API para cerrar sesión
-        const apiUrlCerrarSesion = 'http://localhost:3000/usuarios/salir';
+        const apiUrlCerrarSesion = '/usuarios/salir';
 
         // Realizar la llamada a la API para cerrar sesión utilizando fetch
         fetch(apiUrlCerrarSesion, {
