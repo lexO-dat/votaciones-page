@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://127.0.0.1:27017/LoginDatabase")
+mongoose.connect("mongodb+srv://admin-user:Tupungatito1.@servertest.g2kvmmu.mongodb.net/votaciones?retryWrites=true&w=majority")
   .then(() => {
     console.log("Conectado a la base de datos de votación");
   })
@@ -65,9 +65,18 @@ const datos_votacion = new mongoose.Schema({
     type: String,
     required: false
   },
-  candidato1_imagen: String,
-  candidato2_imagen: String,
-  candidato3_imagen: String,
+  candidato1_imagen: {
+    type: String,
+    required: false
+  },
+  candidato2_imagen: {
+    type: String,
+    required: false
+  },
+  candidato3_imagen: {
+    type: String,
+    required: false
+  }
 });
 
 const votacion = mongoose.model('votacion', datos_votacion);

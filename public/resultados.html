@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/votar.css">
+    <title>Big Bro | Resultados</title>
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container-fluid" id="navegacion">
+            <a href="./index_usuario.html" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+                <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                <span class="fs-4">Big Bro </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Big Bro </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="./index_usuario.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./crear.html">Crear</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./votaciones.html">Votar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./registro.html">Cerrar Sesion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container my-5 text-center">
+        <h2 id="nombreVotacion"></h2>
+        <h6 style="color: rgb(100, 96, 96);">Resultados de la Votación</h6>
+        <div class="row" id="resultadosContainer">
+            <!-- Contenido de los resultados se agregará aquí dinámicamente -->
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+        crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener datos de la votación desde la API
+            const votacionId = obtenerParametroUrl('votacionId');
+
+            fetch(`http://localhost:3000/usuarios/eventos/${votacionId}`)
+                .then(response => response.json())
+                .then(votacion => {
+                    // Actualizar el nombre de la votación
+                    const nombreVotacion = document.getElementById('nombreVotacion');
+                    nombreVotacion.textContent = `Resultados de ${votacion.nombre}`;
+
+                    // Actualizar la información de los resultados
+                    const resultadosContainer = document.getElementById('resultadosContainer');
+
+                    // Crear cards para cada candidato con sus resultados
+                    crearCardCandidato(resultadosContainer, votacion.candidato1, votacion.candidato1_descripcion, votacion.candidato1_votos);
+                    crearCardCandidato(resultadosContainer, votacion.candidato2, votacion.candidato2_descripcion, votacion.candidato2_votos);
+                    crearCardCandidato(resultadosContainer, votacion.candidato3, votacion.candidato3_descripcion, votacion.candidato3_votos);
+                })
+                .catch(error => console.error('Error fetching resultados:', error));
+
+            // Función para obtener parámetros de la URL
+            function obtenerParametroUrl(nombre) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(nombre);
+            }
+
+            // Función para crear una card de candidato
+            function crearCardCandidato(container, nombre, descripcion, votos) {
+                const col = document.createElement('div');
+                col.classList.add('col-md-4', 'mb-4');
+                col.innerHTML = `
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Candidato: ${nombre}</h5>
+                            <p class="card-text">${descripcion}</p>
+                            <p class="card-text">Votos: ${votos}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

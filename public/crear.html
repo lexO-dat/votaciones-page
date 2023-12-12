@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/crear.css">
+    <title>Big Bro | Crear</title>
+</head>
+
+<body>
+    <nav class="navbar bg-body-tertiary fixed-top">
+        <div class="container-fluid" id="navegacion">
+            <a href="./index_admin.html"
+                class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto link-body-emphasis text-decoration-none">
+                <svg class="bi me-2" width="40" height="32">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+                <span class="fs-4">Big Bro </span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Big Bro </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="./index_admin.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./crear.html">Crear</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./votaciones_admin.html">Votar</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn" id="cerrarSesionBtn">Cerrar Sesion</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6 text-center">
+                <h1>Hola Admin!</h1>
+                <p>Ingrese los datos de los 3 participantes para crear la votacion.</p>
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+        <form action="/eventos/crear" id="loginForm" method="post" enctype="multipart/form-data">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><input id="candidato1" name="candidato1" type="text" class="form-control" placeholder="Candidato 1"></td>
+                        <td><input id="candidato2" name="candidato2" type="text" class="form-control" placeholder="Candidato 2"></td>
+                        <td><input id="candidato3" name="candidato3" type="text" class="form-control" placeholder="Candidato 3"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="descripcionc1" name="descripcionc1" type="text" class="form-control" placeholder="Descripcion c1"></td>
+                        <td><input id="descripcionc2" name="descripcionc2" type="text" class="form-control" placeholder="Descripcion c2"></td>
+                        <td><input id="descripcionc3" name="descripcionc3" type="text" class="form-control" placeholder="Descripcion c3"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="fechaInicio" name="fechaInicio" type="date" class="form-control" placeholder="Fecha Inicio"></td>
+                        <td><input id="fechaFin" name="fechaFin" type="date" class="form-control" placeholder="Fecha Fin"></td>
+                        <td><input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre Votacion"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="my-4">
+            <button class="w-100 btn btn-lg" type="submit" id="boton">Crear Votacion</button>
+
+        </form>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+
+    <script>
+        // CREAR EVENTO
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            // Evitar que el formulario se envíe automáticamente
+        event.preventDefault();
+           // Datos para crear un evento
+        const datosEvento = {
+          nombre: document.getElementById('nombre').value, // Reemplaza 'nombre_del_evento' con el nombre del evento
+          candidato1: document.getElementById('candidato1').value, // Reemplaza 'nombre_candidato_1' con el nombre del candidato 1
+          candidato2: document.getElementById('candidato2').value, // Reemplaza 'nombre_candidato_2' con el nombre del candidato 2
+          candidato3: document.getElementById('candidato3').value, // Reemplaza 'nombre_candidato_3' con el nombre del candidato 3
+          descripcionc1: document.getElementById('descripcionc1').value, // Reemplaza 'descripcion_candidato_1' con la descripción del candidato 1
+          descripcionc2: document.getElementById('descripcionc2').value, // Reemplaza 'descripcion_candidato_2' con la descripción del candidato 2
+          descripcionc3: document.getElementById('descripcionc3').value, // Reemplaza 'descripcion_candidato_3' con la descripción del candidato 3
+          fechaInicio: document.getElementById('fechaInicio').value, // Reemplaza 'fecha_inicio_evento' con la fecha de inicio del evento
+          fechaFin: document.getElementById('fechaFin').value, // Reemplaza 'fecha_fin_evento' con la fecha de fin del evento
+        };
+        
+        // URL de la API para crear un evento
+        const apiUrlCrearEvento = 'http://localhost:3000/usuarios/eventos/crear';
+        
+        // Realizar la llamada a la API para crear un evento utilizando fetch
+        fetch(apiUrlCrearEvento, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // Indicar que se está enviando JSON
+          },
+          body: JSON.stringify(datosEvento), // Convertir a JSON y enviar en el cuerpo de la solicitud
+        })
+          .then(response => {
+            // Verificar si la respuesta es exitosa (código de estado 200)
+            if (!response.ok) {
+              throw new Error(`Error de red - Código de estado: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Manejar la respuesta desde el servidor
+            if (data === true) {
+              //envie en pantalla una alerta y luego redirija a la pagina de inicio
+              alert("Evento creado exitosamente");
+              window.location.href = './index_admin.html';
+
+            } else {
+              alert("Error al crear el evento");
+              console.log('Error al crear el evento');
+            }
+          })
+          .catch(error => {
+            // Manejar errores de red u otros errores
+            alert("Error al crear el evento");
+            console.error('Error al realizar la solicitud de creación de evento:', error);
+        
+            // Por ejemplo, mostrar un mensaje de error o realizar otras operaciones necesarias
+          });
+        });
+        </script>
+
+<script>
+    // Manejar el clic en el botón Cerrar Sesión
+    document.getElementById('cerrarSesionBtn').addEventListener('click', function () {
+        // URL de la API para cerrar sesión
+        const apiUrlCerrarSesion = 'http://localhost:3000/usuarios/salir';
+
+        // Realizar la llamada a la API para cerrar sesión utilizando fetch
+        fetch(apiUrlCerrarSesion, {
+            method: 'GET', // Utilizar el método GET
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Manejar la respuesta desde el servidor
+                if (data === true) {
+                    console.log('Sesión cerrada exitosamente');
+                    // Redirigir a index_usuario.html después de cerrar sesión exitosamente
+                    window.location.href = './index_usuario.html';
+                } else {
+                    console.log('Error al cerrar sesión');
+                    // Realizar acciones adicionales en caso de error al cerrar sesión
+                }
+            })
+            .catch(error => {
+                // Manejar errores de red u otros errores
+                console.error('Error al realizar la solicitud de cierre de sesión:', error);
+            });
+    });
+</script>
+</body>
+
+</html>

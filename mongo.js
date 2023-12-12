@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://127.0.0.1:27017/LoginDatabase")
-.then(() => {
-    console.log("Conectado a la db de usuario");
-})
-.catch((err) => {
-    console.error("Error al conectar a la db:", err);
-});
+mongoose.connect("mongodb+srv://admin-user:Tupungatito1.@servertest.g2kvmmu.mongodb.net/votaciones?retryWrites=true&w=majority")
+  .then(() => {
+    console.log("Conectado a la base de datos de usuario");
+  })
+  .catch((err) => {
+    console.error("Error al conectar a la base de datos:", err);
+  });
 
 const UserData = new mongoose.Schema({
     rut: {

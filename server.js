@@ -3,10 +3,25 @@ const app = express();
 const path = require('path');
 const multer = require('multer');
 const port = 3000;
+const eventos = require('./eventos');
 const hbs = require('hbs');
 const collection = require('./mongo');
 const dbvotacion = require('./crear');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
+
+app.use(cors({
+    origin: 'http://127.0.0.1:5500',
+    methods: 'GET,POST',
+    credentials: true
+}));
+
+
+app.use((req, res, next) => {
+    next(); // Continuar con el manejo de la solicitud
+});
+
+// app.options('*', cors());  
 
 hbs.registerHelper('isVotacionAbierta', (fechaFin) => {
     const fechaFinVotacion = new Date(fechaFin);
@@ -26,7 +41,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
     },
-  });
+});
 
 const upload = multer({ storage: storage });
 
@@ -36,7 +51,11 @@ app.set('view engine', 'hbs');
 app.set('views', views_path);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.set('json spaces', 2);
 app.use(cookieParser());
+app.use('/usuarios', eventos);
+app.use(express.json());
 hbs.registerPartials(path.join(__dirname, 'dinamicos/partials'));
 
 
@@ -125,16 +144,13 @@ app.get('/votaciones', async (req, res) => {
     try {
         const votaciones = await dbvotacion.find({});
         if (votaciones.length > 0) {
-            //res.render('votaciones', { votaciones });
-		res.send({ votaciones });
+            res.render('votaciones', { votaciones });
         } else {
-            //res.send("No se encontraron votaciones.");
-		res.send(false);
+            res.send("No se encontraron votaciones.");
         }
     } catch (error) {
         console.error(error);
-        //res.send("Error al cargar las votaciones.");
-	res.send(false);
+        res.send("Error al cargar las votaciones.");
     }
 });
 
@@ -206,14 +222,11 @@ app.post('/registro', async (req, res) => {
             apellido: userData.apellido
         };
         res.cookie('usuario', `${userData.nombre} ${userData.apellido}`, { path: '/index' });
-	
-	res.send(true);
-        //res.render('index', { datos });
+        res.render('index', { datos });
         }
     } catch (error) {
         console.error(error);
-        //res.send("Error en el registro de usuario.");
-	res.send(false);
+        res.send("Error en el registro de usuario.");
     }
 });
 
@@ -244,27 +257,22 @@ app.post('/iniciar', async (req, res) => {
             // Verificar la contraseña
             if (userData.password === password) {
                 res.cookie('usuario', `${userData.nombre} ${userData.apellido}`, { path: '/index' });
-                //res.redirect('/index');
-		res.send(true);
+                res.redirect('/index');
             } else {
-                //res.send("Contraseña incorrecta");
-		res.send(false);
+                res.send("Contraseña incorrecta");
             }
         } else {
-            //res.send("Usuario no encontrado, cree un usuario nuevo o verifique los datos ingresados.");
-		res.send(false)
+            res.send("Usuario no encontrado, cree un usuario nuevo o verifique los datos ingresados.");
         }
     } catch (error) {
         console.error(error);
-        //res.send("Error al iniciar sesión.");
-	res.send(false);
+        res.send("Error al iniciar sesión.");
     }
 });
 
 app.get('/cerrar_sesion', (req, res) => {
     res.clearCookie('usuario');
-    //res.redirect('/indexInicial');
-	res.send(true);
+    res.redirect('/indexInicial');
 });
 
 app.post('/crear', upload.fields([
@@ -293,12 +301,10 @@ app.post('/crear', upload.fields([
 
         const newVotacion = await dbvotacion.create(crear);
 
-        //res.redirect('/index');
-	res.send(true);
+        res.redirect('/index');
     } catch (err) {
         console.error(err);
-        //res.send("Error al crear votación.");
-	res.send(false);
+        res.send("Error al crear votación.");
     }
 });
 
